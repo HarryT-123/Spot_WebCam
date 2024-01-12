@@ -8,7 +8,12 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 VOLUME /videos
 
-ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["/bin/bash", "-l", "-c"]
 
-# Persist container
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/bin/bash", "-l", "-c", "/start.sh"]
+
+#COPY start.sh /start.sh
+#RUN chmod +x /start.sh
+
+# TODO Add if statement and args for record time 
+# TODO Add safe exit to save file and exit
