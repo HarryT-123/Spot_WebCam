@@ -11,7 +11,10 @@ VOLUME /videos
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-ENTRYPOINT ["/bin/bash", "-l", "-c", "/start.sh"]
+# Default 5 minutes
+ENV looptime "300" 
+ENV recordingdevice "/dev/video0"
 
-# TODO Add if statement and args for record time 
-# TODO Add safe exit to save file and exit
+ENTRYPOINT /bin/bash -l -c "/start.sh" $looptime $recordingdevice
+
+#docker run -it --device=/dev/video0 -e looptime=10 test
