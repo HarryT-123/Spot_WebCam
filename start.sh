@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export outputfilename=$(date '+/videos/output-%Y-%m-%d').mp4
+timeanddate=$(date '+%d_%m_%Y_%I_%M_%s_%p') 
+outputfilename="/media/harry/USB-DISK/$timeanddate.mp4" # TODO make this specific to the dog
 
 # FFMPEG Options
 # -f : format 
@@ -8,13 +9,10 @@ export outputfilename=$(date '+/videos/output-%Y-%m-%d').mp4
 # -s : resolution
 # -i : device
 
-if [ "$looptime" -eq 0 ]; then
+if [ "$time" -eq 0 ]; then
   echo "Recording until stopped"
-  ffmpeg -f video4linux2 -r 30 -s 1920x1080 -i $recordingdevice $outputfilename
+  ffmpeg -f video4linux2 -s 1920x720 -i $recordingdevice $outputfilename
 else
-  echo "Recording for $looptime seconds"
-  ffmpeg -f video4linux2 -r 30 -s 1920x1080 -i $recordingdevice $outputfilename -t $looptime 
+  echo "Recording for $time seconds"
+  ffmpeg -f video4linux2 -s 1920x720 -i $recordingdevice $outputfilename -t $time 
 fi
-
-# TODO enable looping
-# TODO save file and exit gracefully
